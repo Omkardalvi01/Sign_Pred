@@ -16,8 +16,8 @@ api = Api(app)
 class PredictSign(Resource):
     def post(self):
         try:
-            data = request.get_json()
-            img = data['img']
+            file = request.files['file']
+            img = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
             img224 = cv2.resize(img , (224,224))
             img224 = img224 / 255.0
             img224 = np.expand_dims(img224, axis=0)
